@@ -17,7 +17,7 @@ void setup()
 
   Serial.begin(9600); 
 }
-
+ 
 void loop()
 {
  // if a new throttle signal has been measured, lets print the value to serial, if not our code could carry on with some other processing
