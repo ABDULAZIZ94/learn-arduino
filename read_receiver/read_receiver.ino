@@ -1,7 +1,7 @@
 #include <EnableInterrupt.h>
 
 #define SERIAL_PORT_SPEED 9600
-#define RC_NUM_CHANNELS  4
+#define RC_NUM_CHANNELS  2
 
 #define RC_CH1  0
 #define RC_CH2  1
@@ -23,11 +23,12 @@ void rc_read_values() {
   interrupts();
 }
 
+//calculate pwm lenght
 void calc_input(uint8_t channel, uint8_t input_pin) {
   if (digitalRead(input_pin) == HIGH) {
-    rc_start[channel] = micros();
+    rc_start[channel] = micros();//record when the pin start became HIGH
   } else {
-    uint16_t rc_compare = (uint16_t)(micros() - rc_start[channel]);
+    uint16_t rc_compare = (uint16_t)(micros() - rc_start[channel]);//how long was the pin HIGH
     rc_shared[channel] = rc_compare;
   }
 }
@@ -40,15 +41,15 @@ void calc_ch4() { calc_input(RC_CH4, RC_CH4_INPUT); }
 void setup() {
   //Serial.begin(SERIAL_PORT_SPEED);
   Serial.begin(9600);
-  pinMode(RC_CH1_INPUT, INPUT);
-  pinMode(RC_CH2_INPUT, INPUT);
-  pinMode(RC_CH3_INPUT, INPUT);
-  pinMode(RC_CH4_INPUT, INPUT);
+  pinMode(RC_CH1_INPUT, INPUT);//set analog pin as input pin
+  pinMode(RC_CH2_INPUT, INPUT);//set analog pin as input pin
+  pinMode(RC_CH3_INPUT, INPUT);//set analog pin as input pin
+  pinMode(RC_CH4_INPUT, INPUT);//set analog pin as input pin
 
-  enableInterrupt(RC_CH1_INPUT, calc_ch1, CHANGE);
-  enableInterrupt(RC_CH2_INPUT, calc_ch2, CHANGE);
-  enableInterrupt(RC_CH3_INPUT, calc_ch3, CHANGE);
-  enableInterrupt(RC_CH4_INPUT, calc_ch4, CHANGE);
+  enableInterrupt(RC_CH1_INPUT, calc_ch1, CHANGE);//execute function when interrupted by signal from analog pin
+  enableInterrupt(RC_CH2_INPUT, calc_ch2, CHANGE);//execute function when interrupted by signal from analog pin
+  enableInterrupt(RC_CH3_INPUT, calc_ch3, CHANGE);//execute function when interrupted by signal from analog pin
+  enableInterrupt(RC_CH4_INPUT, calc_ch4, CHANGE);//execute function when interrupted by signal from analog pin
 }
 
 void loop() {
