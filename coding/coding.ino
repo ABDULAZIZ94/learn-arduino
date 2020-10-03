@@ -25,10 +25,7 @@ void loop() {
   int pwm = 0;
   int rc4 = pulseIn(rc_channel4, HIGH, 25000);
   int rc5 = pulseIn(rc_channel5, HIGH, 25000);
-  
-  
 
-  
   if(rc4==0){
       Serial.println(" no signal");
       digitalWrite(in1, LOW);

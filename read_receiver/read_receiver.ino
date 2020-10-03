@@ -1,7 +1,7 @@
 #include <EnableInterrupt.h>
 
 #define SERIAL_PORT_SPEED 9600
-#define RC_NUM_CHANNELS  2
+#define RC_NUM_CHANNELS  4
 
 #define RC_CH1  0
 #define RC_CH2  1
