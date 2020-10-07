@@ -73,8 +73,6 @@ void calc_ch5() {
     digitalWrite(6, LOW);
   }else if(rc_values[RC_CH5] < 1500){
     digitalWrite(6, HIGH);
-  }else{
-    digitalWrite(6, HIGH);
   }
 }
 void calc_ch6() { 
@@ -86,6 +84,11 @@ void calc_ch6() {
 void setup() {
   //Serial.begin(SERIAL_PORT_SPEED);
   Serial.begin(9600);
+  pinMode(6, OUTPUT);
+  pinMode(5, OUTPUT);
+  pinMode(4, OUTPUT);
+  pinMode(3, OUTPUT);
+  pinMode(2, OUTPUT);
   pinMode(RC_CH2_INPUT, INPUT);//set analog pin as input pin
   pinMode(RC_CH4_INPUT, INPUT);//set analog pin as input pin
   pinMode(RC_CH5_INPUT, INPUT);//set analog pin as input pin
@@ -99,7 +102,6 @@ void setup() {
 
 void loop() {
   rc_read_values();
-
   Serial.print("CH2:"); Serial.print(rc_values[RC_CH2]); Serial.print("\t");
   Serial.print("CH4:"); Serial.print(rc_values[RC_CH4]); Serial.print("\t");
   Serial.print("CH5:"); Serial.print(rc_values[RC_CH5]); Serial.print("\t");
