@@ -67,12 +67,17 @@ void calc_ch4() {
     analogWrite(11,0);
   }
 }
-void calc_ch5() { 
+void calc_ch5() {
+
   calc_input(RC_CH5, RC_CH5_INPUT);
-  if(rc_values[RC_CH5] > 1500){
+  if(rc_values[RC_CH5] > 1700 &&  rc_values[RC_CH5] < 2000){
+    pinMode(6, OUTPUT);
     digitalWrite(6, LOW);
-  }else if(rc_values[RC_CH5] < 1500){
+//    pulseIn(6, LOW);
+  }else if(rc_values[RC_CH5] < 1300 &&  rc_values[RC_CH5] > 100){
+    pinMode(6, OUTPUT);
     digitalWrite(6, HIGH);
+//    pulseIn(6, HIGH);
   }
 }
 void calc_ch6() { 
@@ -82,9 +87,8 @@ void calc_ch6() {
     var_speed = 1;
 }
 void setup() {
-  //Serial.begin(SERIAL_PORT_SPEED);
-  Serial.begin(9600);
-  pinMode(6, OUTPUT);
+//  Serial.begin(9600);
+//  pinMode(6, OUTPUT); //create kejutan motor
   pinMode(5, OUTPUT);
   pinMode(4, OUTPUT);
   pinMode(3, OUTPUT);
@@ -102,12 +106,11 @@ void setup() {
 
 void loop() {
   rc_read_values();
-  Serial.print("CH2:"); Serial.print(rc_values[RC_CH2]); Serial.print("\t");
-  Serial.print("CH4:"); Serial.print(rc_values[RC_CH4]); Serial.print("\t");
-  Serial.print("CH5:"); Serial.print(rc_values[RC_CH5]); Serial.print("\t");
-  Serial.print("CH6:"); Serial.println(rc_values[RC_CH6]);
-  Serial.print("Var Speed:"); Serial.println(var_speed);
-  
-  //map(val,1000,2000,0, 255)
-  delay(200);
+//  Serial.print("CH2:"); Serial.print(rc_values[RC_CH2]); Serial.print("\t");
+//  Serial.print("CH4:"); Serial.print(rc_values[RC_CH4]); Serial.print("\t");
+//  Serial.print("CH5:"); Serial.print(rc_values[RC_CH5]); Serial.print("\t");
+//  Serial.print("CH6:"); Serial.println(rc_values[RC_CH6]);
+//  Serial.print("Var Speed:"); Serial.println(var_speed);
+//  map(val,1000,2000,0, 255)
+//  delay(200);
 }
