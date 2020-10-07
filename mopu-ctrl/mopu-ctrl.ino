@@ -38,14 +38,20 @@ void calc_input(uint8_t channel, uint8_t input_pin) {
 void calc_ch2() { 
   calc_input(RC_CH2, RC_CH2_INPUT);
   if(rc_values[RC_CH2] <1400){
+    pinMode(2, OUTPUT);
+    pinMode(3, OUTPUT);
     digitalWrite(2,HIGH);
     digitalWrite(3,LOW);
     analogWrite(10,var_speed);
   }else if(rc_values[RC_CH2] >1600){
+    pinMode(2, OUTPUT);
+    pinMode(3, OUTPUT);
     digitalWrite(2,LOW);
     digitalWrite(3,HIGH);
     analogWrite(10,var_speed);
   }else{
+    pinMode(2, INPUT);
+    pinMode(3, INPUT);
     digitalWrite(2,LOW);
     digitalWrite(3,LOW);
     analogWrite(10,0);
@@ -54,14 +60,20 @@ void calc_ch2() {
 void calc_ch4() { 
   calc_input(RC_CH4, RC_CH4_INPUT); 
   if(rc_values[RC_CH4] < 1400){
+    pinMode(4, OUTPUT);
+    pinMode(5, OUTPUT);
     digitalWrite(4,HIGH);
     digitalWrite(5,LOW);
     analogWrite(11,var_speed);
   }else if(rc_values[RC_CH4] >1600){
+    pinMode(4, OUTPUT);
+    pinMode(5, OUTPUT);
     digitalWrite(4,LOW);
     digitalWrite(5,HIGH);
     analogWrite(11,var_speed);
   }else{
+    pinMode(4, INPUT);
+    pinMode(5, INPUT);
     digitalWrite(4,LOW);
     digitalWrite(5,LOW);
     analogWrite(11,0);
@@ -89,10 +101,10 @@ void calc_ch6() {
 void setup() {
 //  Serial.begin(9600);
 //  pinMode(6, OUTPUT); //create kejutan motor
-  pinMode(5, OUTPUT);
-  pinMode(4, OUTPUT);
-  pinMode(3, OUTPUT);
-  pinMode(2, OUTPUT);
+//  pinMode(5, OUTPUT);
+//  pinMode(4, OUTPUT);
+//  pinMode(3, OUTPUT);
+//  pinMode(2, OUTPUT);
   pinMode(RC_CH2_INPUT, INPUT);//set analog pin as input pin
   pinMode(RC_CH4_INPUT, INPUT);//set analog pin as input pin
   pinMode(RC_CH5_INPUT, INPUT);//set analog pin as input pin
