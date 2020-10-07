@@ -17,7 +17,7 @@
 uint16_t rc_values[RC_NUM_CHANNELS];
 uint32_t rc_start[RC_NUM_CHANNELS];
 volatile uint16_t rc_shared[RC_NUM_CHANNELS];
-volatile int var_speed;
+volatile int var_speed = 1;
 
 void rc_read_values() {
   noInterrupts();
@@ -74,7 +74,7 @@ void calc_ch5() {
   }else if(rc_values[RC_CH5] < 1500){
     digitalWrite(6, HIGH);
   }else{
-    digitalWrite(6, LOW);
+    digitalWrite(6, HIGH);
   }
 }
 void calc_ch6() { 
@@ -85,7 +85,6 @@ void calc_ch6() {
 }
 void setup() {
   //Serial.begin(SERIAL_PORT_SPEED);
-  var_speed = 1;
   Serial.begin(9600);
   pinMode(RC_CH2_INPUT, INPUT);//set analog pin as input pin
   pinMode(RC_CH4_INPUT, INPUT);//set analog pin as input pin
