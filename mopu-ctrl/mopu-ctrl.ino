@@ -38,57 +38,70 @@ void calc_input(uint8_t channel, uint8_t input_pin) {
 void calc_ch2() { 
   calc_input(RC_CH2, RC_CH2_INPUT);
   if(rc_values[RC_CH2] <1400){
-    pinMode(2, OUTPUT);
-    pinMode(3, OUTPUT);
-    digitalWrite(2,HIGH);
-    digitalWrite(3,LOW);
-    analogWrite(10,var_speed);
+    pinMode(7, OUTPUT);
+    pinMode(6, OUTPUT);
+    digitalWrite(7, LOW);
+    digitalWrite(6, LOW);
+//    pinMode(2, OUTPUT);
+//    pinMode(3, OUTPUT);
+//    digitalWrite(2,HIGH);
+//    digitalWrite(3,LOW);
+//    analogWrite(10,var_speed);
   }else if(rc_values[RC_CH2] >1600){
-    pinMode(2, OUTPUT);
-    pinMode(3, OUTPUT);
-    digitalWrite(2,LOW);
-    digitalWrite(3,HIGH);
-    analogWrite(10,var_speed);
+    pinMode(7, OUTPUT);
+    pinMode(6, OUTPUT);
+    digitalWrite(7, HIGH);
+    digitalWrite(6, LOW);
+//    pinMode(2, OUTPUT);
+//    pinMode(3, OUTPUT);
+//    digitalWrite(2,LOW);
+//    digitalWrite(3,HIGH);
+//    analogWrite(10,var_speed);
   }else{
-    pinMode(2, INPUT);
-    pinMode(3, INPUT);
-    digitalWrite(2,LOW);
-    digitalWrite(3,LOW);
-    analogWrite(10,0);
+    pinMode(7, OUTPUT);
+    pinMode(6, OUTPUT);
+    digitalWrite(7, HIGH);
+    digitalWrite(6, HIGH);
+//
+//    pinMode(2, INPUT);
+//    pinMode(3, INPUT);
+//    digitalWrite(2,LOW);
+//    digitalWrite(3,LOW);
+//    analogWrite(10,0);
   }
 }
 void calc_ch4() { 
   calc_input(RC_CH4, RC_CH4_INPUT); 
   if(rc_values[RC_CH4] < 1400){
-    pinMode(4, OUTPUT);
-    pinMode(5, OUTPUT);
-    digitalWrite(4,HIGH);
-    digitalWrite(5,LOW);
-    analogWrite(11,var_speed);
+//    pinMode(4, OUTPUT);
+//    pinMode(5, OUTPUT);
+//    digitalWrite(4,HIGH);
+//    digitalWrite(5,LOW);
+//    analogWrite(11,var_speed);
   }else if(rc_values[RC_CH4] >1600){
-    pinMode(4, OUTPUT);
-    pinMode(5, OUTPUT);
-    digitalWrite(4,LOW);
-    digitalWrite(5,HIGH);
-    analogWrite(11,var_speed);
+//    pinMode(4, OUTPUT);
+//    pinMode(5, OUTPUT);
+//    digitalWrite(4,LOW);
+//    digitalWrite(5,HIGH);
+//    analogWrite(11,var_speed);
   }else{
-    pinMode(4, INPUT);
-    pinMode(5, INPUT);
-    digitalWrite(4,LOW);
-    digitalWrite(5,LOW);
-    analogWrite(11,0);
+//    pinMode(4, INPUT);
+//    pinMode(5, INPUT);
+//    digitalWrite(4,LOW);
+//    digitalWrite(5,LOW);
+//    analogWrite(11,0);
   }
 }
 void calc_ch5() {
 
   calc_input(RC_CH5, RC_CH5_INPUT);
   if(rc_values[RC_CH5] > 1700 &&  rc_values[RC_CH5] < 2000){
-    pinMode(6, OUTPUT);
-    digitalWrite(6, LOW);
+    //pinMode(6, OUTPUT);
+    //digitalWrite(6, LOW);
 //    pulseIn(6, LOW);
   }else if(rc_values[RC_CH5] < 1300 &&  rc_values[RC_CH5] > 100){
-    pinMode(6, OUTPUT);
-    digitalWrite(6, HIGH);
+    //pinMode(6, OUTPUT);
+    //digitalWrite(6, HIGH);
 //    pulseIn(6, HIGH);
   }
 }
@@ -99,7 +112,7 @@ void calc_ch6() {
     var_speed = 1;
 }
 void setup() {
-//  Serial.begin(9600);
+  Serial.begin(9600);
 //  pinMode(6, OUTPUT); //create kejutan motor
 //  pinMode(5, OUTPUT);
 //  pinMode(4, OUTPUT);
@@ -112,13 +125,13 @@ void setup() {
     
   enableInterrupt(RC_CH2_INPUT, calc_ch2, CHANGE);//execute function when interrupted by signal from analog pin
   enableInterrupt(RC_CH4_INPUT, calc_ch4, CHANGE);//execute function when interrupted by signal from analog pin
-  enableInterrupt(RC_CH5_INPUT, calc_ch5, CHANGE);//execute function when interrupted by signal from analog pin
+//  enableInterrupt(RC_CH5_INPUT, calc_ch5, CHANGE);//execute function when interrupted by signal from analog pin
   enableInterrupt(RC_CH6_INPUT, calc_ch6, CHANGE);//execute function when interrupted by signal from analog pin
 }
 
 void loop() {
   rc_read_values();
-//  Serial.print("CH2:"); Serial.print(rc_values[RC_CH2]); Serial.print("\t");
+  Serial.print("CH2:"); Serial.println(rc_values[RC_CH2]); //Serial.print("\t");
 //  Serial.print("CH4:"); Serial.print(rc_values[RC_CH4]); Serial.print("\t");
 //  Serial.print("CH5:"); Serial.print(rc_values[RC_CH5]); Serial.print("\t");
 //  Serial.print("CH6:"); Serial.println(rc_values[RC_CH6]);
