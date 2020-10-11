@@ -124,5 +124,5 @@ void loop() {
 //  Serial.print("CH6:"); Serial.println(rc_values[RC_CH6]);
 //  Serial.print("Var Speed:"); Serial.println(var_speed);
 //  map(val,1000,2000,0, 255)
-//  delay(200);
+//    delay(200);
 }
