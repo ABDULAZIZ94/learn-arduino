@@ -38,32 +38,32 @@ void calc_input(uint8_t channel, uint8_t input_pin) {
 void calc_ch2() { 
   calc_input(RC_CH2, RC_CH2_INPUT);
   if(rc_values[RC_CH2] <1400){
-    pinMode(7, OUTPUT);
     pinMode(6, OUTPUT);
-    digitalWrite(7, LOW);
+    pinMode(7, OUTPUT);
     digitalWrite(6, LOW);
+    digitalWrite(7, LOW);
 //    pinMode(2, OUTPUT);
 //    pinMode(3, OUTPUT);
 //    digitalWrite(2,HIGH);
 //    digitalWrite(3,LOW);
 //    analogWrite(10,var_speed);
   }else if(rc_values[RC_CH2] >1600){
-    pinMode(7, OUTPUT);
     pinMode(6, OUTPUT);
-    digitalWrite(7, HIGH);
+    pinMode(7, OUTPUT);
     digitalWrite(6, LOW);
+    digitalWrite(7, HIGH);
 //    pinMode(2, OUTPUT);
 //    pinMode(3, OUTPUT);
 //    digitalWrite(2,LOW);
 //    digitalWrite(3,HIGH);
 //    analogWrite(10,var_speed);
   }else{
-    pinMode(7, OUTPUT);
     pinMode(6, OUTPUT);
-    digitalWrite(7, HIGH);
+    pinMode(7, OUTPUT);
     digitalWrite(6, HIGH);
+    digitalWrite(7, HIGH);
 //
-//    pinMode(2, INPUT);
+//    pinMode(2, INPU                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           T);
 //    pinMode(3, INPUT);
 //    digitalWrite(2,LOW);
 //    digitalWrite(3,LOW);
@@ -131,10 +131,10 @@ void setup() {
 
 void loop() {
   rc_read_values();
-  Serial.print("CH2:"); Serial.println(rc_values[RC_CH2]); //Serial.print("\t");
-//  Serial.print("CH4:"); Serial.print(rc_values[RC_CH4]); Serial.print("\t");
-//  Serial.print("CH5:"); Serial.print(rc_values[RC_CH5]); Serial.print("\t");
-//  Serial.print("CH6:"); Serial.println(rc_values[RC_CH6]);
+  Serial.print("CH2:"); Serial.print(rc_values[RC_CH2]); //Serial.print("\t");
+  Serial.print("CH4:"); Serial.print(rc_values[RC_CH4]); Serial.print("\t");
+  Serial.print("CH5:"); Serial.print(rc_values[RC_CH5]); Serial.print("\t");
+  Serial.print("CH6:"); Serial.println(rc_values[RC_CH6]);
 //  Serial.print("Var Speed:"); Serial.println(var_speed);
 //  map(val,1000,2000,0, 255)
 //    delay(200);
