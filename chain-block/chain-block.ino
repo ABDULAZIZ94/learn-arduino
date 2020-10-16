@@ -41,10 +41,10 @@ void calc_ch2() {
     delay(5000);
     need_neutral = true;
   }else if(rc_values[RC_CH2] >1600 && need_neutral==false){
-    pinMode(6, OUTPUT);
-    pinMode(7, OUTPUT);
-    digitalWrite(6, LOW);
-    digitalWrite(7, HIGH);
+//    pinMode(6, OUTPUT);
+//    pinMode(7, OUTPUT);
+//    digitalWrite(6, LOW);
+//    digitalWrite(7, HIGH);
     delay(5000);
     need_neutral = true;
   }else{
