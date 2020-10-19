@@ -29,6 +29,7 @@ volatile unsigned long down_start_time = 0;
 volatile unsigned long down_current_time = 0;
 volatile unsigned long down_elapsed_time = 0;
 
+volatile unsigned long on_duration = 250;
 
 void rc_read_values() {
   noInterrupts();
@@ -105,7 +106,7 @@ void calc_ch2() {
   if(rc_values[RC_CH2] > 1700 && up_need_neutral==false){
       relay1=true;
       relay2=true; 
-      if(up_elapsed_time >= 1500){
+      if(up_elapsed_time >= on_duration){
         relay1=false;
         relay2=false;
         up_need_neutral=true;
@@ -114,7 +115,7 @@ void calc_ch2() {
   }else if(rc_values[RC_CH2] < 1300 && down_need_neutral==false ){
       relay3=true;
       relay4=true;
-      if(down_elapsed_time >= 1500){
+      if(down_elapsed_time >= on_duration){
         relay3=false;
         relay4=false;
         down_need_neutral=true;
@@ -130,7 +131,14 @@ void calc_ch2() {
   }
 
 }
-void calc_ch5() { calc_input(RC_CH5, RC_CH5_INPUT); }
+void calc_ch5() { 
+  calc_input(RC_CH5, RC_CH5_INPUT);
+    if(rc_values[RC_CH5] > 1500){
+      on_duration = 500;
+    }else if(rc_values[RC_CH5] < 1500){
+      on_duration = 250;
+    }
+  }
 
 void setup() {
   //Serial.begin(SERIAL_PORT_SPEED);
