@@ -12,18 +12,23 @@
 uint16_t rc_values[RC_NUM_CHANNELS];
 uint32_t rc_start[RC_NUM_CHANNELS];
 volatile uint16_t rc_shared[RC_NUM_CHANNELS];
-volatile bool need_neutral = false;
+volatile bool up_need_neutral = false;
+volatile bool down_need_neutral = false;
 
-//to make signal not determine
+//to make signal not determine relay
 volatile bool relay1 = false;
 volatile bool relay2 = false;
 volatile bool relay3 = false;
 volatile bool relay4 = false;
 
 //start time
-volatile unsigned long start_time = 0;
-volatile unsigned long current_time = 0;
-volatile unsigned long elapsed_time = 0;
+volatile unsigned long up_start_time = 0;
+volatile unsigned long up_current_time = 0;
+volatile unsigned long up_elapsed_time = 0;
+volatile unsigned long down_start_time = 0;
+volatile unsigned long down_current_time = 0;
+volatile unsigned long down_elapsed_time = 0;
+
 
 void rc_read_values() {
   noInterrupts();
@@ -79,32 +84,49 @@ void calc_ch2() {
   calc_input(RC_CH2, RC_CH2_INPUT); 
 
   //calculate how long hoist switched on
-  if(relay1==false && relay2 ==false){
-    start_time=millis();
-    need_neutral = false;
-  }else if(relay1==true && relay2 ==true){
-      current_time=millis();
-      elapsed_time=current_time - start_time;
+  if( relay1==false && relay2==false ){
+    up_start_time=millis();
+    up_need_neutral = false;
+  }else if( relay1==true && relay2==true ){
+      up_current_time=millis();
+      up_elapsed_time=up_current_time - up_start_time;
   }
+
+  if( relay3==false && relay4==false ){
+    down_start_time=millis();
+    down_need_neutral = false;
+  }else if( relay3==true && relay4==true ){
+      down_current_time=millis();
+      down_elapsed_time=down_current_time - down_start_time;
+  }
+
   
-  if(rc_values[RC_CH2] > 1700 && need_neutral==false){
+  
+  if(rc_values[RC_CH2] > 1700 && up_need_neutral==false){
       relay1=true;
       relay2=true; 
-      if(elapsed_time >= 1500){
+      if(up_elapsed_time >= 1500){
         relay1=false;
         relay2=false;
-        need_neutral=true;
+        up_need_neutral=true;
         return;
-     }
-  }else if(rc_values[RC_CH2] < 1300 ){
-    relay3=true;
-    relay4=true;
+      }
+  }else if(rc_values[RC_CH2] < 1300 && down_need_neutral==false ){
+      relay3=true;
+      relay4=true;
+      if(down_elapsed_time >= 1500){
+        relay3=false;
+        relay4=false;
+        down_need_neutral=true;
+        return;
+      }
   }else{
-    relay1=false;
-    relay2=false;
-    relay3=false;
-    relay4=false;
-    elapsed_time=0;
+      relay1=false;
+      relay2=false;
+      relay3=false;
+      relay4=false;
+      up_elapsed_time=0;
+      down_elapsed_time=0;
   }
 
 }
@@ -123,10 +145,14 @@ void setup() {
 void loop() {
   rc_read_values();
   set_relay_state();
-  Serial.print("Start:");Serial.print(start_time);Serial.print("\t");
-  Serial.print("Current:");Serial.print(current_time);Serial.print("\t");
-  Serial.print("Elapsed:");Serial.print(elapsed_time);Serial.print("\t");
-  Serial.print("Need Neutral:");Serial.println(need_neutral);Serial.print("\t");
+//  Serial.print("UpStart:");Serial.print(up_start_time);Serial.print("\t");
+//  Serial.print("UpCurrent:");Serial.print(up_current_time);Serial.print("\t");
+//  Serial.print("UpElapsed:");Serial.print(up_elapsed_time);Serial.print("\t");
+  Serial.print("DownStart:");Serial.print(down_start_time);Serial.print("\t");
+  Serial.print("DownCurrent:");Serial.print(down_current_time);Serial.print("\t");
+  Serial.print("DownElapsed:");Serial.print(down_elapsed_time);Serial.print("\t");
+//  Serial.print("Up Need Neutral:");Serial.print(up_need_neutral);Serial.print("\t");
+  Serial.print("Down Need Neutral:");Serial.println(down_need_neutral);Serial.print("\t");
 //  Serial.print("CH2:"); Serial.print(rc_values[RC_CH2]); Serial.print("\t");
 //  Serial.print("CH5:"); Serial.println(rc_values[RC_CH5]);
 }
