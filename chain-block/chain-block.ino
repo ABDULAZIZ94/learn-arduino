@@ -26,10 +26,37 @@ void rc_read_values() {
 }
 
 set_relay_state(){
-  digitalWrite(4, relay1?HIGH:LOW);
-  digitalWrite(5, relay2?HIGH:LOW);
-  digitalWrite(6, relay3?HIGH:LOW);
-  digitalWrite(7, relay4?HIGH:LOW);
+  if(relay1){
+    pinMode(4, OUTPUT);
+    digitalWrite(4, LOW);
+  }else{
+    pinMode(4, INPUT);
+    digitalWrite(4, HIGH);
+  }
+
+  if(relay2){
+    pinMode(5, OUTPUT);
+    digitalWrite(5, LOW);
+  }else{
+    pinMode(5, INPUT);
+    digitalWrite(5, HIGH);
+  }
+  
+  if(relay3){
+    pinMode(6, OUTPUT);
+    digitalWrite(6, LOW);    
+  }else{
+    pinMode(6, INPUT);
+    digitalWrite(6, HIGH);
+  }
+  
+  if(relay4){
+    pinMode(7, OUTPUT);
+    digitalWrite(7, LOW);    
+  }else{
+    pinMode(7, INPUT);
+    digitalWrite(7, HIGH);    
+  }
 }
 
 //calculate pwm lenght
@@ -57,7 +84,7 @@ void calc_ch2() {
       previous_time = currrent_time;
       currrent_time = millis();
       elapsed_time = currrent_time - previous_time;
-      if((elapsed_time < 1)){
+      if((elapsed_time < 10)){
         digitalWrite(6, HIGH);
         digitalWrite(7, HIGH);
         need_neutral = true;
