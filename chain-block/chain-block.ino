@@ -33,6 +33,7 @@ volatile unsigned long neutral_current_time = 0;
 volatile unsigned long neutral_elapsed_time = 0;
 
 volatile unsigned long on_duration = 250;
+volatile unsigned long neutral_delay = 1500;
 
 void rc_read_values() {
   noInterrupts();
@@ -107,7 +108,7 @@ void calc_ch2() {
         down_elapsed_time=down_current_time - down_start_time;
     }
   
-  if(rc_values[RC_CH2] > 1700 && up_need_neutral==false && neutral_elapsed_time>2000){
+  if(rc_values[RC_CH2] > 1700 && up_need_neutral==false && neutral_elapsed_time>neutral_delay){
       if(up_elapsed_time >= on_duration){
         relay1=false;
         relay2=false;
@@ -117,7 +118,7 @@ void calc_ch2() {
       relay1=true;
       relay2=true;
       neutral_start_time = 0; 
-  }else if(rc_values[RC_CH2] < 1200 && down_need_neutral==false && neutral_elapsed_time>2000){
+  }else if(rc_values[RC_CH2] < 1200 && down_need_neutral==false && neutral_elapsed_time>neutral_delay){
       if(down_elapsed_time >= on_duration){
         relay3=false;
         relay4=false;
@@ -145,10 +146,10 @@ void calc_ch2() {
 }
 void calc_ch5() { 
   calc_input(RC_CH5, RC_CH5_INPUT);
-    if(rc_values[RC_CH5] > 1500){
-      on_duration = 500;
-    }else if(rc_values[RC_CH5] < 1500){
+    if(rc_values[RC_CH5] < 1500){
       on_duration = 250;
+    }else if(rc_values[RC_CH5] > 1500){
+      on_duration = 3600000;
     }
   }
 
@@ -159,7 +160,7 @@ void setup() {
   pinMode(RC_CH5_INPUT, INPUT);//set analog pin as input pin
                                           
   enableInterrupt(RC_CH2_INPUT, calc_ch2, CHANGE);//execute function when interrupted by signal from analog pin
-//  enableInterrupt(RC_CH5_INPUT, calc_ch5, CHANGE);//execute function when interrupted by signal from analog pin
+  enableInterrupt(RC_CH5_INPUT, calc_ch5, CHANGE);//execute function when interrupted by signal from analog pin
 }
 
 void loop() {
